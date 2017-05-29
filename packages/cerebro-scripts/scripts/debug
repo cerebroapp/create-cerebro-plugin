@@ -1,0 +1,33 @@
+#!/bin/sh
+if [[ $1 == "dev" ]]; then
+	appname="Electron"
+else
+	appname="Cerebro"
+fi
+
+case "$(uname -s)" in
+
+   Darwin)
+     symlink="${HOME}/Library/Application Support/${appname}/plugins/node_modules/${PWD##*/}"
+     trap "echo 'Deleting symlink' && rm -rf \"$symlink\"" SIGHUP SIGINT SIGTERM
+     ;;
+
+   Linux)
+     symlink="${HOME}/.config/${appname}/plugins/node_modules/${PWD##*/}"
+     trap "echo 'Deleting symlink' && rm -rf \"$symlink\"" HUP INT TERM
+     ;;
+
+   CYGWIN*|MINGW32*|MINGW64*|MSYS*)
+     symlink="${APPDATA}\\${appname}\plugins\node_modules\\${PWD##*/}"
+     trap "echo 'Deleting symlink' && rm -rf \"$symlink\"" SIGHUP SIGINT SIGTERM
+     ;;
+
+   *)
+     echo "Unknown system. Please, open an issue in https://github.com/KELiON/cerebro-plugin/issues"
+     exit
+     ;;
+esac
+
+echo "Creating symlink: $symlink -> ${PWD}"
+ln -s "${PWD}" "$symlink"
+./node_modules/.bin/webpack --watch

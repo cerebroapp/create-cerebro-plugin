@@ -1,0 +1,1 @@
+console.log('Start initialization of cerebro-scripts')
