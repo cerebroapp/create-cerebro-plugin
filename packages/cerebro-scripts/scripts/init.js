@@ -81,7 +81,7 @@ module.exports = function(appPath, appName, originalDirectory) {
   }
 
   console.log();
-  console.log(`Success! Created ${appName} at ${appPath}`);
+  console.log(`Success! Created plugin structure for ${appName} at ${appPath}`);
   console.log('Inside that directory, you can run several commands:');
   console.log();
   console.log(chalk.cyan(`  yarn start`));
@@ -90,7 +90,7 @@ module.exports = function(appPath, appName, originalDirectory) {
   console.log(
     chalk.cyan(`  yarn build`)
   );
-  console.log('    Build your plugin');
+  console.log('    Build your plugin before publishing it');
   console.log();
   console.log(chalk.cyan(`  yarn test`));
   console.log('    Starts the test runner.');
