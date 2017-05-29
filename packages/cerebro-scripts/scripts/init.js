@@ -1,1 +1,3 @@
-console.log('Start initialization of cerebro-scripts')
+module.exports = function() {
+  console.log('Start initialization of cerebro-scripts')
+}

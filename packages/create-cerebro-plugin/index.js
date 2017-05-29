@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const commander = require('commander');
 const packageJson = require('./package.json')
 const spawn = require('cross-spawn');
+const semver = require('semver');
 let pluginName
 
 const program = new commander.Command(packageJson.name)
@@ -188,7 +189,7 @@ function run(root, appName, originalDirectory) {
         'init.js'
       );
       const init = require(scriptsPath);
-      init(root, appName, originalDirectory, template);
+      init(root, appName, originalDirectory);
     })
     .catch(reason => {
       console.log();
