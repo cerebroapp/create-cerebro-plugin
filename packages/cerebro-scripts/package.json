@@ -1,6 +1,6 @@
 {
   "name": "cerebro-scripts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Configuration and scripts for Create Cerebro Plugin.",
   "license": "MIT",
   "repository": "KELiON/create-cerebro-plugin",
@@ -25,13 +25,6 @@
     "template",
     "utils"
   ],
-  "scripts": {
-    "build": "webpack && babili dist -d dist --compact --no-comments",
-    "debug": "./scripts/debug",
-    "debug:windows": "scripts\\debug.bat",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --require ./test/setup.js",
-    "prepublish": "rimraf ./dist && npm run build"
-  },
   "main": "dist/index.js",
   "keywords": [
     "cerebro",
