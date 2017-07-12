@@ -17,7 +17,7 @@ const appName = process.argv[2] === 'dev' ? 'Electron' : 'Cerebro'
 
 const homeDir = require('os').homedir()
 
-const pluginName = path.basename(paths.pluginPath)
+const pluginName = require(path.join(paths.pluginPath, 'package.json')).name
 
 let symlinkPath
 
