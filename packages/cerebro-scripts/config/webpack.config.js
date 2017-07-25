@@ -36,7 +36,7 @@ module.exports = {
         }
       },
       exclude: (modulePath) => (
-        modulePath.match(/node_modules/) && !modulePath.match(/node_modules\/cerebro-/)
+        modulePath.match(/node_modules/) && !modulePath.match(/node_modules[\/\\]cerebro-/)
       )
     }, {
       test: /\.css$/,
