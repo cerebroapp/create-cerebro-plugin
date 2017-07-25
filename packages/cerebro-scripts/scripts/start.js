@@ -34,7 +34,7 @@ if (process.platform === 'darwin') {
 } else if (process.platform === 'win32') {
   symlinkPath = path.join(
     process.env.APPDATA,
-    appname,
+    appName,
     'plugins',
     'node_modules',
     pluginName
@@ -57,7 +57,7 @@ if (fs.existsSync(symlinkPath)) {
 }
 
 console.log('   Create symlink')
-fs.symlinkSync(paths.pluginPath, symlinkPath)
+fs.symlinkSync(paths.pluginPath, symlinkPath, process.platform === 'win32' ? 'junction' : 'file')
 
 // Handle ctrl+c to remove symlink to plugin
 process.on('SIGHUP', removeSymlink);
