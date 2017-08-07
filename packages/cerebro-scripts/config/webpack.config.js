@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const babelConfig = require('babel-preset-cerebro-plugin');
 
 const paths = require('./paths')
 
@@ -26,14 +27,7 @@ module.exports = {
       test: /\.jsx?$/,
       use: {
         loader: 'babel-loader',
-        options: {
-          plugins: [
-            require('babel-plugin-transform-object-rest-spread'),
-            require('babel-plugin-transform-react-jsx'),
-            require('babel-plugin-syntax-jsx'),
-            require('babel-plugin-transform-es2015-classes')
-          ]
-        }
+        options: babelConfig
       },
       exclude: (modulePath) => (
         modulePath.match(/node_modules/) && !modulePath.match(/node_modules[\/\\]cerebro-/)
