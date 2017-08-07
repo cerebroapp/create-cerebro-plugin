@@ -1,1 +1,1 @@
-console.log('Testing script is not provided yet')
+console.log('Testing script is not provided yet. You can try to use jest now')
