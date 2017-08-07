@@ -1,6 +1,6 @@
 {
   "name": "cerebro-scripts",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Configuration and scripts for Create Cerebro Plugin.",
   "license": "MIT",
   "repository": "KELiON/create-cerebro-plugin",
@@ -34,7 +34,7 @@
     "babel-cli": "^6.18.0",
     "babel-loader": "^6.2.8",
     "babel-node-modules": "0.0.1",
-    "babel-preset-cerebro-plugin": "^0.0.13",
+    "babel-preset-cerebro-plugin": "^0.0.14",
     "babili": "0.1.2",
     "chai": "^3.5.0",
     "chalk": "1.1.3",
