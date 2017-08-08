@@ -33,12 +33,6 @@ module.exports = (resolve, rootDir, isEjecting) => {
     config.rootDir = rootDir;
   }
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
-  const supportedKeys = [
-    'collectCoverageFrom',
-    'coverageReporters',
-    'coverageThreshold',
-    'snapshotSerializers',
-  ];
   if (overrides) {
     Object.keys(overrides).forEach(key => {
       if (overrides.hasOwnProperty(key)) {
