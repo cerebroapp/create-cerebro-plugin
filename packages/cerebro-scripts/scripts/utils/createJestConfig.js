@@ -27,7 +27,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '^.+\\.css$': resolve('config/jest/cssTransform.js'),
       '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$']
+    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\](?!cerebro-).+\\.(js|jsx)$']
   };
   if (rootDir) {
     config.rootDir = rootDir;
