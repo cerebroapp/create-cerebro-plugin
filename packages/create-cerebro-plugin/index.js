@@ -9,6 +9,7 @@ const commander = require('commander');
 const packageJson = require('./package.json')
 const spawn = require('cross-spawn');
 const semver = require('semver');
+const url = require('url');
 let pluginName
 
 const program = new commander.Command(packageJson.name)
@@ -268,7 +269,21 @@ function fixDependencies(packageName) {
 function checkIfOnline() {
   return new Promise(resolve => {
     dns.lookup('registry.yarnpkg.com', err => {
-      resolve(err === null);
+      if (err != null && (process.env.https_proxy || process.env.proxy)) {
+        var hostname;
+        if (process.env.https_proxy) {
+          hostname = url.parse(process.env.https_proxy).hostname
+        } else {
+          if (process.env.proxy) {
+            hostname = url.parse(process.env.proxy).hostname
+          }
+        }
+        dns.lookup(hostname, proxyErr => {
+          resolve(proxyErr == null);
+        });
+      } else {
+        resolve(err == null);
+      }
     });
   });
 }
