@@ -39,28 +39,6 @@ module.exports = function(appPath, appName, originalDirectory) {
     JSON.stringify(appPackage, null, 2)
   );
 
-  // Rename gitignore and npmignore files to .npmignore and .gitignore
-  // See: https://github.com/npm/npm/issues/1862    
-  ['npmignore', 'gitignore'].forEach(ignoreFile => {
-    fs.move(    
-      path.join(appPath, ignoreFile),    
-      path.join(appPath, `.${ignoreFile}`),   
-      [],   
-      err => {    
-        if (err) {    
-          // Append if there's already a `.gitignore` or `.npmignore` file there    
-          if (err.code === 'EEXIST') {    
-            const data = fs.readFileSync(path.join(appPath, ignoreFile));    
-            fs.appendFileSync(path.join(appPath, `.${ignoreFile}`), data);    
-            fs.unlinkSync(path.join(appPath, ignoreFile));   
-          } else {    
-            throw err;    
-          }   
-        }   
-      }   
-    );
-  })
-
   // Copy the files for the user
   const templatePath = path.join(ownPath, 'template');
   if (fs.existsSync(templatePath)) {
@@ -71,6 +49,28 @@ module.exports = function(appPath, appName, originalDirectory) {
     );
     return;
   }
+
+  // Rename gitignore and npmignore files to .npmignore and .gitignore
+  // See: https://github.com/npm/npm/issues/1862    
+  ['npmignore', 'gitignore'].forEach(ignoreFile => {
+    fs.move(
+      path.join(appPath, ignoreFile),
+      path.join(appPath, `.${ignoreFile}`),
+      [],
+      err => {
+        if (err) {
+          // Append if there's already a `.gitignore` or `.npmignore` file there    
+          if (err.code === 'EEXIST') {
+            const data = fs.readFileSync(path.join(appPath, ignoreFile));
+            fs.appendFileSync(path.join(appPath, `.${ignoreFile}`), data);
+            fs.unlinkSync(path.join(appPath, ignoreFile));
+          } else {
+            throw err;
+          }
+        }
+      }
+    );
+  })
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
