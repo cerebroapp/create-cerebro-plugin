@@ -33,4 +33,4 @@ spawn.sync(
   { stdio: 'inherit' }
 )
 
-console.log(`    Done! You plugin is ready to publish`)
+console.log(`    Done! Your plugin is ready to publish`)
