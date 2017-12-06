@@ -31,7 +31,9 @@ module.exports = function(appPath, appName, originalDirectory) {
   appPackage.scripts = {
     start: 'cerebro-scripts start',
     build: 'cerebro-scripts build',
-    test: 'cerebro-scripts test'
+    test: 'cerebro-scripts test',
+    clear: "cerebro-scripts clear",
+    prepublish: "yarn clear && yarn build"
   };
 
   fs.writeFileSync(
