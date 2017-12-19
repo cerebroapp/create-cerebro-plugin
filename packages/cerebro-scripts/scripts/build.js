@@ -21,16 +21,19 @@ if (!fs.existsSync(paths.dist)) {
 
 console.log('    Bundling all files...')
 spawn.sync(
-  paths.webpackBin, 
+  paths.webpackBin,
   ['--config', paths.webpackConfig],
   { stdio: 'inherit' }
 )
 
-console.log('    Minify build...')
-spawn.sync(
-  paths.babiliBin,
-  [paths.dist, '-d', paths.dist, '--compact', '--no-comments'],
-  { stdio: 'inherit' }
-)
+// TODO: use babel-minify and fix minifier
+// babili is too unstable and breaks build sometimes
+// console.log('    Minify build...')
+// spawn.sync(
+//   paths.babiliBin,
+//   [paths.dist, '-d', paths.dist, '--compact', '--no-comments'],
+//   { stdio: 'inherit' }
+// )
 
 console.log(`    Done! Your plugin is ready to publish`)
+
