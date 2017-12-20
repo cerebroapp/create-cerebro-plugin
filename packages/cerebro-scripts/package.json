@@ -1,6 +1,6 @@
 {
   "name": "cerebro-scripts",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Configuration and scripts for Create Cerebro Plugin.",
   "license": "MIT",
   "repository": "KELiON/create-cerebro-plugin",
