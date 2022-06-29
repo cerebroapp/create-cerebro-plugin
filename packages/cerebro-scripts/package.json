@@ -1,5 +1,5 @@
 {
-  "name": "cerebro-scripts",
+  "name": "@cerebroapp/cerebro-scripts",
   "version": "1.0.0",
   "type": "module",
   "description": "Configuration and scripts for Create Cerebro Plugin.",

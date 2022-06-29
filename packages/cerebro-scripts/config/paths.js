@@ -5,7 +5,7 @@ import fs from 'fs'
 
 const pluginPath = path.resolve()
 const dist = path.resolve('dist')
-const __dirname = path.join(pluginPath, 'node_modules', 'cerebro-scripts')
+const __dirname = path.join(pluginPath, 'node_modules', '@cerebroapp', 'cerebro-scripts')
 
 const webpackBin = path.join(__dirname, 'node_modules', '.bin', 'webpack')
 
@@ -27,5 +27,6 @@ export default {
 	appPackageJson,
 	pluginPath, dist,
 	webpackBin, webpackConfig,
-	babiliBin, testsSetup
+	babiliBin, testsSetup,
+	__dirname
 }
