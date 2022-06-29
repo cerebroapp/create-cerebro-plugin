@@ -18,10 +18,10 @@ export default {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.jsx', '...'],
     modules: [
-      path.resolve('./src'),
-      path.resolve('./node_modules'),
+      path.resolve('src'),
+     'node_modules'
     ]
   },
   target: 'electron-renderer',
@@ -33,17 +33,24 @@ export default {
         loader: 'babel-loader',
         options: {
           presets: [
-            ['@babel/preset-env', { targets: "defaults" }]
-          ],
-          plugins: ['@babel/plugin-proposal-class-properties']
+            [
+              '@babel/preset-env',
+              { targets: "defaults" }
+            ],
+            "@babel/preset-react"
+          ]
         }
       },
-      exclude: (modulePath) => (
-        modulePath.match(/node_modules/) && !modulePath.match(/node_modules[\/\\]cerebro-/)
-      )
+      resolve: {
+        fullySpecified: false
+      },
+      exclude: "/node_modules/",
     }, {
       test: /\.css$/,
-      use: ['style-loader', 'css-loader']
+      use: ['style-loader', {
+        loader: 'css-loader',
+        options: {modules: true},
+      }]
     }, {
       test: /\.png$/,
       type: 'asset/inline'
