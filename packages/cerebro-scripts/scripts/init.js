@@ -6,17 +6,19 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const fs = require('fs-extra');
-const path = require('path');
-const chalk = require('chalk');
+import fs from 'fs-extra'
+import path from 'path'
+import chalk from 'chalk'
+import { createRequire } from 'module';
+import paths from '../config/paths';
+const require = createRequire(import.meta.url);
 
-module.exports = function(appPath, appName, originalDirectory) {
+export default async function(appPath, appName, originalDirectory) {
   const ownPackageName = require(path.join(
-    __dirname,
-    '..',
+    paths.__dirname,
     'package.json'
   )).name;
-  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
+  const ownPath = paths.__dirname;
   const appPackage = require(path.join(appPath, 'package.json'));
 
   // Copy over some of the devDependencies
