@@ -1,16 +1,20 @@
-const webpack = require('webpack');
-const path = require('path');
-const babelConfig = require('babel-preset-cerebro-plugin');
+import webpack from  'webpack'
+import path from  'path'
 
-const paths = require('./paths')
+import paths from  './paths.js'
 
-module.exports = {
+export default {
   entry: {
     index: './src/index'
   },
+
+  target: 'electron19-renderer',
+
   output: {
     path: paths.dist,
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'commonjs2'
+    },
     filename: 'index.js'
   },
   resolve: {
@@ -27,26 +31,22 @@ module.exports = {
       test: /\.jsx?$/,
       use: {
         loader: 'babel-loader',
-        options: babelConfig
+        options: {
+          presets: [
+            ['@babel/preset-env', { targets: "defaults" }]
+          ],
+          plugins: ['@babel/plugin-proposal-class-properties']
+        }
       },
       exclude: (modulePath) => (
         modulePath.match(/node_modules/) && !modulePath.match(/node_modules[\/\\]cerebro-/)
       )
     }, {
       test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-        query: {
-          modules: true
-        }
-      }]
+      use: ['style-loader', 'css-loader']
     }, {
       test: /\.png$/,
-      use: {
-        loader: 'url-loader'
-      }
+      type: 'asset/inline'
     }]
   },
   plugins: [
