@@ -5,7 +5,7 @@ import fs from 'fs'
 
 const pluginPath = path.resolve()
 const dist = path.resolve('dist')
-const __dirname = path.resolve()
+const __dirname = path.join(pluginPath, 'node_modules', 'cerebro-scripts')
 
 const webpackBin = path.join(__dirname, 'node_modules', '.bin', 'webpack')
 
