@@ -1,10 +1,13 @@
 'use strict';
 
-const fs = require('fs');
-const chalk = require('chalk');
-const paths = require('../../config/paths');
+import fs from 'fs'
+import chalk from 'chalk'
+import paths from '../../config/paths.js'
 
-module.exports = (resolve, rootDir, isEjecting) => {
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+export default (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
@@ -16,22 +19,17 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
     setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.js?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
-    ],
+    transform: {},
     testEnvironment: 'node',
-    testURL: 'http://localhost',
-    transform: {
-      '^.+\\.(js|jsx)$': resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
+    testEnvironmentOptions: {
+      url: 'http://localhost'
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\](?!cerebro-).+\\.(js|jsx)$']
   };
   if (rootDir) {
     config.rootDir = rootDir;
   }
+
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   if (overrides) {
     Object.keys(overrides).forEach(key => {
