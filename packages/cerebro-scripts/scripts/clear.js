@@ -7,10 +7,9 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const spawn = require('cross-spawn')
-const fs = require('fs-extra');
+import fs from 'fs-extra'
 
-const paths = require('../config/paths')
+import paths from '../config/paths.js'
 
 if (fs.existsSync(paths.dist)) {
   console.log(`Removing ${paths.dist}...`)

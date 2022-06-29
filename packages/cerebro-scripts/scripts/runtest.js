@@ -11,7 +11,7 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const jest = require('jest');
+import jest from 'jest'
 const argv = process.argv.slice(2);
 
 // Watch unless on CI or in coverage mode
@@ -21,14 +21,15 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 
 // @remove-on-eject-begin
 // This is not necessary after eject because we embed config into package.json.
-const createJestConfig = require('./utils/createJestConfig');
-const path = require('path');
-const paths = require('../config/paths');
+import createJestConfig from './utils/createJestConfig.js';
+import path from 'path';
+import paths from '../config/paths.js';
+
 argv.push(
   '--config',
   JSON.stringify(
     createJestConfig(
-      relativePath => path.resolve(__dirname, '..', relativePath),
+      relativePath => path.resolve(relativePath),
       paths.pluginPath
     )
   )

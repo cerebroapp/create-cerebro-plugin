@@ -7,17 +7,20 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const spawn = require('cross-spawn')
-const path = require('path')
-const fs = require('fs')
+import spawn from 'cross-spawn'
+import path from 'path'
+import fs from 'fs'
+import os from 'os'
 
-const paths = require('../config/paths')
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pkgJson = require(path.resolve("package.json"));
 
-const appName = process.argv[2] === 'dev' ? 'Electron' : 'Cerebro'
+import paths from '../config/paths.js'
 
-const homeDir = require('os').homedir()
-
-const pluginName = require(path.join(paths.pluginPath, 'package.json')).name
+const appName = 'Cerebro'
+const homeDir = os.homedir()
+const pluginName = pkgJson.name
 
 let symlinkPath
 
@@ -59,21 +62,20 @@ if (fs.existsSync(symlinkPath)) {
 console.log('   Create symlink')
 fs.symlinkSync(paths.pluginPath, symlinkPath, process.platform === 'win32' ? 'junction' : 'file')
 
+function removeSymlink() {
+  console.log('   Removing symlink')
+  fs.unlinkSync(symlinkPath)
+}
+
 // Handle ctrl+c to remove symlink to plugin
 process.on('SIGHUP', removeSymlink);
 process.on('SIGINT', removeSymlink);
 process.on('SIGTERM', removeSymlink);
 process.on('SIGBREAK', removeSymlink);
 
-
 console.log('   Starting webpack...')
-const result = spawn.sync(
+spawn.sync(
   paths.webpackBin, 
-  ['--config', paths.webpackConfig, '--watch'],
+  ['--config', paths.webpackConfig, '--watch', '--mode=development'],
   { stdio: 'inherit' }
 )
-
-function removeSymlink() {
-  console.log('   Removing symlink')
-  fs.unlinkSync(symlinkPath)
-}

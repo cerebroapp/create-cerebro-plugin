@@ -7,10 +7,10 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const spawn = require('cross-spawn')
-const fs = require('fs')
+import spawn from 'cross-spawn'
+import fs from 'fs'
 
-const paths = require('../config/paths')
+import paths from '../config/paths.js'
 
 console.log(`Building Cerebro plugin into ${paths.dist}`)
 
@@ -22,7 +22,7 @@ if (!fs.existsSync(paths.dist)) {
 console.log('    Bundling all files...')
 spawn.sync(
   paths.webpackBin,
-  ['--config', paths.webpackConfig],
+  ['--config', paths.webpackConfig, '--mode=production'],
   { stdio: 'inherit' }
 )
 
