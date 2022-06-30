@@ -18,10 +18,7 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 argv.push(
   '--config',
   JSON.stringify(
-    createJestConfig(
-      relativePath => path.resolve(relativePath),
-      paths.pluginPath
-    )
+    createJestConfig(paths.pluginPath)
   )
 );
 
