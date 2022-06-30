@@ -8,7 +8,7 @@ export default {
     index: './src/index'
   },
 
-  target: 'electron19-renderer',
+  target: 'electron-renderer',
 
   output: {
     path: paths.dist,
@@ -24,7 +24,7 @@ export default {
      'node_modules'
     ]
   },
-  target: 'electron-renderer',
+  target: 'electron19-renderer',
   externals: ['nodobjc'],
   module: {
     rules: [{
@@ -35,7 +35,7 @@ export default {
           presets: [
             [
               '@babel/preset-env',
-              { targets: "defaults" }
+              // { targets: "defaults" } Next versions --> Support only from cerebro 1.0.0 (electron 19, chorme 102, node 16...)
             ],
             "@babel/preset-react"
           ]
