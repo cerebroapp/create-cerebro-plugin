@@ -15,10 +15,10 @@ const require = createRequire(import.meta.url);
 
 export default async function(appPath, appName, originalDirectory) {
   const ownPackageName = require(path.join(
-    paths.__dirname,
+    paths.ownPath,
     'package.json'
   )).name;
-  const ownPath = paths.__dirname;
+  const ownPath = paths.ownPath;
   const appPackage = require(path.join(appPath, 'package.json'));
 
   // Copy over some of the devDependencies
