@@ -1,22 +1,20 @@
-'use strict';
-
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them. In the future, promise rejections that are not handled will
-// terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
-  throw err;
-});
-
 import spawn from 'cross-spawn'
 import path from 'path'
 import fs from 'fs'
 import os from 'os'
-
 import { createRequire } from "module";
+
+import paths from '../config/paths.js'
+
+/** Makes the script crash on unhandled rejections instead of silently
+ * ignoring them. In the future, promise rejections that are not handled will
+ * terminate the Node.js process with a non-zero exit code.
+ */
+process.on('unhandledRejection', err => { throw err });
+
 const require = createRequire(import.meta.url);
 const pkgJson = require(path.resolve("package.json"));
 
-import paths from '../config/paths.js'
 
 const appName = 'Cerebro'
 const homeDir = os.homedir()
@@ -53,17 +51,17 @@ if (process.platform === 'darwin') {
   )
 }
 
-console.log('Start plugin development')
+console.group('Start plugin development')
 if (fs.existsSync(symlinkPath)) {
-  console.log('   Symlink already exist')
+  console.log('Symlink already exist')
   removeSymlink()
 }
 
-console.log('   Create symlink')
+console.log('Create symlink')
 fs.symlinkSync(paths.pluginPath, symlinkPath, process.platform === 'win32' ? 'junction' : 'file')
 
 function removeSymlink() {
-  console.log('   Removing symlink')
+  console.log('Removing symlink')
   fs.unlinkSync(symlinkPath)
 }
 
@@ -73,7 +71,7 @@ process.on('SIGINT', removeSymlink);
 process.on('SIGTERM', removeSymlink);
 process.on('SIGBREAK', removeSymlink);
 
-console.log('   Starting webpack...')
+console.log('Starting webpack...')
 spawn.sync(
   paths.webpackBin, 
   ['--config', paths.webpackConfig, '--watch', '--mode=development'],

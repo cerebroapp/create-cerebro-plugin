@@ -1,5 +1,4 @@
 import createJestConfig from './utils/createJestConfig.js';
-import path from 'path';
 import spawn from 'cross-spawn'
 import paths from '../config/paths.js';
 

@@ -1,16 +1,15 @@
-'use strict';
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them. In the future, promise rejections that are not handled will
-// terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', err => {
-  throw err;
-});
-
 import fs from 'fs-extra'
 import path from 'path'
 import chalk from 'chalk'
 import { createRequire } from 'module';
 import paths from '../config/paths';
+
+/** Makes the script crash on unhandled rejections instead of silently
+ * ignoring them. In the future, promise rejections that are not handled will
+ * terminate the Node.js process with a non-zero exit code.
+ */
+process.on('unhandledRejection', err => { throw err });
+
 const require = createRequire(import.meta.url);
 
 export default async function(appPath, appName, originalDirectory) {
@@ -88,23 +87,23 @@ export default async function(appPath, appName, originalDirectory) {
 
   console.log();
   console.log(`Success! Created plugin structure for ${appName} at ${appPath}`);
-  console.log('Inside that directory, you can run several commands:');
+
+  console.group('Inside that directory, you can run several commands:');
   console.log();
-  console.log(chalk.cyan(`  yarn start`));
-  console.log('    Starts the development process of plugin.');
+  console.log(chalk.cyan(`yarn start`));
+  console.log('Starts the development process of plugin.');
   console.log();
-  console.log(
-    chalk.cyan(`  yarn build`)
-  );
-  console.log('    Build your plugin before publishing it');
+  console.log(chalk.cyan(`yarn build`));
+  console.log('Build your plugin before publishing it');
   console.log();
-  console.log(chalk.cyan(`  yarn test`));
-  console.log('    Starts the test runner.');
+  console.log(chalk.cyan('yarn test'));
+  console.log('Starts the test runner.');
+  console.groupEnd();
+
+  console.group('We suggest that you begin by typing:');
   console.log();
-  console.log('We suggest that you begin by typing:');
-  console.log();
-  console.log(chalk.cyan('  cd'), cdpath);
-  console.log(`  ${chalk.cyan(`yarn start`)}`);
-  console.log();
+  console.log(chalk.cyan('cd'), cdpath);
+  console.log(chalk.cyan('yarn start'));
+  console.groupEnd();
   console.log('Happy hacking!');
 }

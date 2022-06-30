@@ -36,7 +36,7 @@ export default {
           presets: [
             [
               '@babel/preset-env',
-              // { targets: "defaults" } Next versions --> Support only from cerebro 1.0.0 (electron 19, chorme 102, node 16...)
+              // { targets: "defaults" } Next versions --> Support only from last cerebro mayor version (electron 19, chorme 102, node 16...)
             ],
             "@babel/preset-react"
           ]
