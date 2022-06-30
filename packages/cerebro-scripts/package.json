@@ -1,6 +1,6 @@
 {
   "name": "@cerebroapp/cerebro-scripts",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.6",
   "type": "module",
   "description": "Configuration and scripts for Create Cerebro Plugin.",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "cerebro-scripts": "./bin/cerebro-scripts.js"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=16"
   },
   "bugs": {
     "url": "https://github.com/cerebroapp/create-cerebro-plugin/issues"
@@ -44,6 +44,7 @@
     "react-test-renderer": "15.7.0",
     "rimraf": "3.0.2",
     "style-loader": "3.3.1",
+    "terser-webpack-plugin": "^5.3.3",
     "webpack": "5.73.0",
     "webpack-cli": "4.10.0"
   }
