@@ -1,5 +1,6 @@
 import webpack from  'webpack'
 import path from  'path'
+import TerserPlugin from 'terser-webpack-plugin'
 
 import paths from  './paths.js'
 
@@ -24,7 +25,7 @@ export default {
      'node_modules'
     ]
   },
-  target: 'electron19-renderer',
+  target: 'electron-renderer',
   externals: ['nodobjc'],
   module: {
     rules: [{
@@ -63,5 +64,19 @@ export default {
       'window.React': 'react',
       'window.ReactDOM': 'react-dom'
     })
-  ]
+  ],
+
+  optimization: {
+    minimize: process.env.NODE_ENV === 'production',
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  }
 };
