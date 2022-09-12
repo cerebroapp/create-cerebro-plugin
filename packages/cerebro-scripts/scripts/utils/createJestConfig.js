@@ -1,37 +1,31 @@
-'use strict';
+import fs from 'fs'
+import paths from '../../config/paths.js'
 
-const fs = require('fs');
-const chalk = require('chalk');
-const paths = require('../../config/paths');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-module.exports = (resolve, rootDir, isEjecting) => {
+export default (rootDir) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
   const setupTestsFile = fs.existsSync(paths.testsSetup)
-    ? '<rootDir>/src/setupTests.js'
+    ? paths.testsSetup
     : undefined;
 
   // TODO: I don't know if it's safe or not to just use / as path separator
   // in Jest configs. We need help from somebody with Windows to determine this.
   const config = {
     collectCoverageFrom: ['src/**/*.{js,jsx}'],
-    setupTestFrameworkScriptFile: setupTestsFile,
-    testMatch: [
-      '<rootDir>/src/**/__tests__/**/*.js?(x)',
-      '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
-    ],
+    setupFilesAfterEnv: setupTestsFile ? [setupTestsFile] : [],
+    transform: {},
     testEnvironment: 'node',
-    testURL: 'http://localhost',
-    transform: {
-      '^.+\\.(js|jsx)$': resolve('config/jest/babelTransform.js'),
-      '^.+\\.css$': resolve('config/jest/cssTransform.js'),
-      '^(?!.*\\.(js|jsx|css|json)$)': resolve('config/jest/fileTransform.js'),
-    },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\](?!cerebro-).+\\.(js|jsx)$']
+    testEnvironmentOptions: {
+      url: 'http://localhost'
+    }
   };
   if (rootDir) {
     config.rootDir = rootDir;
   }
+
   const overrides = Object.assign({}, require(paths.appPackageJson).jest);
   if (overrides) {
     Object.keys(overrides).forEach(key => {

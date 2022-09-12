@@ -1,23 +1,28 @@
-const webpack = require('webpack');
-const path = require('path');
-const babelConfig = require('babel-preset-cerebro-plugin');
+import webpack from  'webpack'
+import path from  'path'
+import TerserPlugin from 'terser-webpack-plugin'
 
-const paths = require('./paths')
+import paths from  './paths.js'
 
-module.exports = {
+export default {
   entry: {
     index: './src/index'
   },
+
+  target: 'electron-renderer',
+
   output: {
     path: paths.dist,
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'commonjs2'
+    },
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.jsx', '...'],
     modules: [
-      path.resolve('./src'),
-      path.resolve('./node_modules'),
+      path.resolve('src'),
+     'node_modules'
     ]
   },
   target: 'electron-renderer',
@@ -27,26 +32,29 @@ module.exports = {
       test: /\.jsx?$/,
       use: {
         loader: 'babel-loader',
-        options: babelConfig
+        options: {
+          presets: [
+            [
+              '@babel/preset-env',
+              // { targets: "defaults" } Next versions --> Support only from last cerebro mayor version (electron 19, chorme 102, node 16...)
+            ],
+            "@babel/preset-react"
+          ]
+        }
       },
-      exclude: (modulePath) => (
-        modulePath.match(/node_modules/) && !modulePath.match(/node_modules[\/\\]cerebro-/)
-      )
+      resolve: {
+        fullySpecified: false
+      },
+      exclude: "/node_modules/",
     }, {
       test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
+      use: ['style-loader', {
         loader: 'css-loader',
-        query: {
-          modules: true
-        }
+        options: {modules: true},
       }]
     }, {
       test: /\.png$/,
-      use: {
-        loader: 'url-loader'
-      }
+      type: 'asset/inline'
     }]
   },
   plugins: [
@@ -56,5 +64,18 @@ module.exports = {
       'window.React': 'react',
       'window.ReactDOM': 'react-dom'
     })
-  ]
+  ],
+
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  }
 };
